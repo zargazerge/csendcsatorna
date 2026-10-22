@@ -1,0 +1,144 @@
+/* Ideiglenes, funkcionális stílus – a végleges designt később beszéljük át. */
+
+:root {
+  --bg: #04060c;
+  --panel: #0a0f1d;
+  --line: #1a2238;
+  --text: #cdd6ea;
+  --faint: #6c7894;
+  --alien: #72f1ff;
+  --player: #ffd38a;
+  --danger: #ff7a7a;
+  --ok: #8dffb0;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; }
+body {
+  background: radial-gradient(ellipse at 50% 120%, #0d1630 0%, var(--bg) 60%);
+  color: var(--text);
+  font: 16px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+.hidden { display: none !important; }
+.faint { color: var(--faint); }
+.small { font-size: 13px; }
+
+.view { height: 100dvh; }
+.center { display: grid; place-items: center; padding: 16px; }
+
+.card {
+  width: min(380px, 100%);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 28px 24px;
+}
+h1, .brand { font-family: ui-monospace, "JetBrains Mono", monospace; letter-spacing: 0.25em; color: var(--alien); }
+h1 { font-size: 20px; margin: 0 0 4px; }
+h2 { font-size: 18px; margin: 0 0 16px; }
+h3 { font-size: 14px; margin: 18px 0 2px; letter-spacing: 0.08em; text-transform: uppercase; }
+
+form label { display: block; font-size: 13px; color: var(--faint); margin: 12px 0; }
+input {
+  display: block; width: 100%; margin-top: 4px;
+  background: #050812; color: var(--text);
+  border: 1px solid var(--line); border-radius: 8px;
+  padding: 10px 12px; font: inherit;
+}
+input:focus { outline: none; border-color: var(--alien); }
+button {
+  background: var(--alien); color: #021015; border: 0; border-radius: 8px;
+  padding: 10px 16px; font: inherit; font-weight: 600; cursor: pointer;
+}
+button:disabled { opacity: 0.5; cursor: wait; }
+button.link { background: none; color: var(--faint); font-weight: 400; padding: 8px 0; margin-left: 12px; }
+button.ghost { background: none; color: var(--faint); border: 1px solid var(--line); padding: 6px 10px; font-weight: 400; }
+.msg { min-height: 1.5em; color: var(--danger); font-size: 14px; margin: 8px 0 0; }
+.msg.ok { color: var(--ok); }
+
+/* ---- játék elrendezés ---- */
+#view-game { display: grid; grid-template-rows: auto 1fr auto; }
+.topbar {
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 16px; border-bottom: 1px solid var(--line);
+  background: rgba(4, 6, 12, 0.8);
+}
+.topbar .brand { font-size: 13px; }
+.spacer { flex: 1; }
+
+.game { display: grid; grid-template-columns: 1fr 300px; min-height: 0; }
+.log-wrap { overflow-y: auto; padding: 16px; }
+#panel { border-left: 1px solid var(--line); background: var(--panel); padding: 4px 16px 16px; overflow-y: auto; }
+
+.msg-row { display: flex; margin: 10px 0; }
+.msg-row.player { justify-content: flex-end; }
+.bubble {
+  max-width: min(640px, 88%);
+  padding: 10px 14px; border-radius: 12px;
+  display: flex; flex-wrap: wrap; align-items: center; gap: 6px;
+}
+.alien .bubble { background: rgba(114, 241, 255, 0.06); border: 1px solid rgba(114, 241, 255, 0.25); color: var(--alien); }
+.player .bubble { background: rgba(255, 211, 138, 0.07); border: 1px solid rgba(255, 211, 138, 0.25); color: var(--player); white-space: pre-wrap; }
+.sysline { text-align: center; color: var(--faint); font-size: 13px; letter-spacing: 0.1em; margin: 18px 0; }
+.ooc { width: 100%; color: var(--text); font-size: 14px; border-top: 1px solid var(--line); padding-top: 8px; margin-top: 4px; }
+
+/* ---- jelek ---- */
+.glyph { display: inline-flex; width: 28px; height: 28px; }
+.glyph svg { width: 100%; height: 100%; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+.glyph svg .f { fill: currentColor; stroke: none; }
+.glyph.noise { opacity: 0.45; }
+.glyph[title]:not([title=""]) { cursor: help; }
+
+.num { display: inline-flex; gap: 2px; }
+.num svg { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 1.3; }
+.num svg .f { fill: currentColor; stroke: none; }
+.num svg .cell { stroke-opacity: 0.35; }
+
+.pulse { display: inline-flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+.pgroup { display: inline-flex; gap: 3px; }
+.pgroup i { width: 8px; height: 8px; border-radius: 50%; background: currentColor; box-shadow: 0 0 6px currentColor; }
+.pulse.anim .pgroup i { opacity: 0.12; animation: flash 0.5s ease-out forwards; }
+@keyframes flash {
+  0% { opacity: 0.12; transform: scale(0.6); }
+  40% { opacity: 1; transform: scale(1.4); box-shadow: 0 0 14px currentColor; }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+.pause { display: inline-block; width: 14px; height: 2px; background: currentColor; opacity: 0.3; margin: 0 6px; }
+.word { font-family: ui-monospace, monospace; padding: 1px 6px; border: 1px dashed rgba(114, 241, 255, 0.4); border-radius: 6px; }
+
+#typing { color: var(--faint); font-size: 13px; padding: 4px 0 12px; }
+#typing span { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--alien); margin-right: 3px; animation: blink 1.2s infinite; }
+#typing span:nth-child(2) { animation-delay: 0.2s; }
+#typing span:nth-child(3) { animation-delay: 0.4s; }
+@keyframes blink { 0%, 100% { opacity: 0.15; } 50% { opacity: 1; } }
+
+/* ---- panel ---- */
+.lex-row { display: flex; flex-direction: column; padding: 6px 0; border-bottom: 1px solid var(--line); font-size: 14px; }
+.lex-row strong { color: var(--alien); font-weight: 600; }
+.note-row { display: flex; align-items: center; gap: 8px; margin: 6px 0; color: var(--alien); }
+.note-row input { margin: 0; padding: 6px 8px; font-size: 14px; }
+
+/* ---- bevitel ---- */
+.composer { border-top: 1px solid var(--line); padding: 10px 16px calc(10px + env(safe-area-inset-bottom)); background: rgba(4, 6, 12, 0.9); }
+#glyph-keys { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 8px; }
+.gkey { background: rgba(114, 241, 255, 0.06); border: 1px solid var(--line); color: var(--alien); padding: 4px; border-radius: 8px; flex: 0 0 auto; }
+#preview { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; color: var(--player); padding: 6px 2px; font-size: 14px; }
+#say-form { display: flex; gap: 8px; }
+#say-form input { margin: 0; }
+
+/* ---- mobil ---- */
+@media (max-width: 760px) {
+  .game { grid-template-columns: 1fr; position: relative; }
+  #panel {
+    position: absolute; inset: 0 0 0 auto; width: min(320px, 88vw);
+    transform: translateX(100%); transition: transform 0.2s ease;
+    z-index: 5; box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5);
+  }
+  #panel.open { transform: none; }
+  #phase-label { font-size: 12px; }
+  .topbar .brand { display: none; }
+}
+@media (min-width: 761px) { #panel-toggle { display: none; } }

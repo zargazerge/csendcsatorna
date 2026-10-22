@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="hu">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="robots" content="noindex">
+  <title>Csendcsatorna</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Betöltés -->
+  <section id="view-loading" class="view center">
+    <p class="faint">kapcsolódás…</p>
+  </section>
+
+  <!-- Belépés -->
+  <section id="view-login" class="view center hidden">
+    <div class="card">
+      <h1>CSENDCSATORNA</h1>
+      <p class="faint">Zárt csatorna. Csak meghívott résztvevőknek.</p>
+      <form id="login-form">
+        <label>Email<input type="email" id="login-email" autocomplete="username" required></label>
+        <label>Jelszó<input type="password" id="login-password" autocomplete="current-password" required></label>
+        <button type="submit">Belépés</button>
+        <button type="button" id="forgot-btn" class="link">Elfelejtett jelszó</button>
+        <p class="msg" id="login-msg"></p>
+      </form>
+    </div>
+  </section>
+
+  <!-- Meghívó elfogadása / új jelszó -->
+  <section id="view-setup" class="view center hidden">
+    <div class="card">
+      <h2 id="setup-title">Profil beállítása</h2>
+      <form id="setup-form">
+        <label id="username-row">Felhasználónév
+          <input type="text" id="setup-username" minlength="3" maxlength="20" autocomplete="nickname">
+        </label>
+        <label>Jelszó (min. 10 karakter)
+          <input type="password" id="setup-password" minlength="10" autocomplete="new-password" required>
+        </label>
+        <label>Jelszó újra
+          <input type="password" id="setup-password2" minlength="10" autocomplete="new-password" required>
+        </label>
+        <button type="submit">Mentés</button>
+        <p class="msg" id="setup-msg"></p>
+      </form>
+    </div>
+  </section>
+
+  <!-- Játék -->
+  <section id="view-game" class="view hidden">
+    <header class="topbar">
+      <span class="brand">CSENDCSATORNA</span>
+      <span id="phase-label" class="faint"></span>
+      <span class="spacer"></span>
+      <button id="panel-toggle" class="ghost">Szótár</button>
+      <button id="logout-btn" class="ghost">Kilépés</button>
+    </header>
+
+    <main class="game">
+      <div class="log-wrap" id="log-wrap">
+        <div id="log"></div>
+        <div id="typing" class="hidden"><span></span><span></span><span></span> jel érkezik</div>
+      </div>
+
+      <aside id="panel">
+        <h3>Közös szótár</h3>
+        <p class="faint small">Szavak, amelyeket a lény már megtanult tőled.</p>
+        <div id="lexicon"></div>
+        <h3>Jegyzetfüzet</h3>
+        <p class="faint small">Írd a jelek mellé, szerinted mit jelentenek.</p>
+        <div id="notebook"></div>
+      </aside>
+    </main>
+
+    <footer class="composer">
+      <div id="glyph-keys"></div>
+      <div id="preview" class="hidden"></div>
+      <form id="say-form">
+        <input id="say-input" maxlength="500" autocomplete="off" placeholder="Válasz a jelre…">
+        <button type="submit" id="say-btn">Küldés</button>
+      </form>
+      <p class="msg" id="game-msg"></p>
+    </footer>
+  </section>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
